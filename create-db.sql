@@ -9,8 +9,9 @@ CREATE TABLE IF NOT EXISTS `users` (
     `username` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    `role` ENUM('admin', 'super_admin') NOT NULL DEFAULT 'admin',
-    `login_time` DATETIME,
+    `role` VARCHAR(255) NOT NULL DEFAULT 'admin',
+    `session_quantity` INT DEFAULT 1,
+    `login_time` INT DEFAULT 24,
     `refresh_token` VARCHAR(255),
     `is_active` BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (`id`),
@@ -58,7 +59,12 @@ CREATE TABLE IF NOT EXISTS `services` (
 CREATE TABLE IF NOT EXISTS `login_logs` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `id_user` INT NOT NULL,
+    `user` VARCHAR(255),
+    `ip_address` VARCHAR(255),
+    `action` VARCHAR(255),
     `content` TEXT,
+    `status` ENUM('success', 'failed') NOT NULL,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`id_user`) REFERENCES `users`(`id`) ON DELETE CASCADE
@@ -95,4 +101,13 @@ CREATE TABLE IF NOT EXISTS `services_logs` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`id_service`) REFERENCES `services`(`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `session` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `ip_address` VARCHAR(255),
+    `created_at` DATETIME,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
