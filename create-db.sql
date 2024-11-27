@@ -11,9 +11,8 @@ CREATE TABLE IF NOT EXISTS `users` (
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `role` VARCHAR(255) NOT NULL DEFAULT 'admin',
-    `session_quantity` INT DEFAULT 1,
+    `session_quantity` INT DEFAULT 3,
     `login_time` INT DEFAULT 24,
-    `refresh_token` VARCHAR(255),
     `is_active` BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`),
@@ -108,6 +107,7 @@ CREATE TABLE IF NOT EXISTS `session` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
     `ip_address` VARCHAR(255),
+    `refresh_token` VARCHAR(255),
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
