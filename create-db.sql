@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `products` (
     `file_download` VARCHAR(255),
     `content` TEXT,
     `view` INT DEFAULT 0,
+    `status` VARCHAR(255),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
