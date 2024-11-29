@@ -6,6 +6,7 @@ USE `Bkav_CS`;
 
 CREATE TABLE IF NOT EXISTS `users` (
     `id` VARCHAR(50),
+    `user_code` VARCHAR(50) NOT NULL UNIQUE,
     `full_name` VARCHAR(255) NOT NULL,
     `username` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
@@ -21,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 CREATE TABLE IF NOT EXISTS `categories` (
     `id` VARCHAR(50),
+    `category_code` VARCHAR(50) NOT NULL UNIQUE,
     `category_name` VARCHAR(255) NOT NULL,
     `created_at` DATETIME,
     `updated_at` DATETIME,
@@ -30,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 CREATE TABLE IF NOT EXISTS `products` (
     `id` VARCHAR(50),
     `id_category` VARCHAR(50) NOT NULL,
+    `product_code` VARCHAR(50) NOT NULL UNIQUE,
     `product_name` VARCHAR(255) NOT NULL,
     `preview` TEXT,
     `logo` VARCHAR(255),
@@ -47,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 CREATE TABLE IF NOT EXISTS `services` (
     `id` VARCHAR(50),
+    `service_code` VARCHAR(50) NOT NULL UNIQUE,
     `service_name` VARCHAR(255) NOT NULL,
     `preview` TEXT,
     `content` TEXT,
@@ -137,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `session` (
     `ip_address` VARCHAR(255),
     `refresh_token` VARCHAR(255),
     `created_at` DATETIME,
+    
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
