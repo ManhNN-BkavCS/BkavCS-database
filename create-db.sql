@@ -5,7 +5,7 @@ USE `Bkav_CS`;
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `users` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `full_name` VARCHAR(255) NOT NULL,
     `username` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 );
 
 CREATE TABLE IF NOT EXISTS `categories` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `category_name` VARCHAR(255) NOT NULL,
     `created_at` DATETIME,
     `updated_at` DATETIME,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 );
 
 CREATE TABLE IF NOT EXISTS `products` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `id_category` INT NOT NULL,
     `product_name` VARCHAR(255) NOT NULL,
     `preview` TEXT,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 );
 
 CREATE TABLE IF NOT EXISTS `services` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `service_name` VARCHAR(255) NOT NULL,
     `preview` TEXT,
     `content` TEXT,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `services` (
 );
 
 CREATE TABLE IF NOT EXISTS `login_logs` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `id_user` INT NOT NULL,
     `user` VARCHAR(255),
     `ip_address` VARCHAR(255),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `login_logs` (
 );
 
 CREATE TABLE IF NOT EXISTS `user_logs` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `admin_id` INT NOT NULL,
     `user_id` INT NOT NULL,
     `ip_address` VARCHAR(255),
@@ -87,10 +87,14 @@ CREATE TABLE IF NOT EXISTS `user_logs` (
 );
 
 CREATE TABLE IF NOT EXISTS `category_logs` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `user_id` INT NOT NULL,
     `id_category` INT NOT NULL,
+    `ip_address` VARCHAR(255),
+    `action` VARCHAR(255),
     `content` TEXT,
+    `status` ENUM('success', 'failed') NOT NULL,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
@@ -98,10 +102,14 @@ CREATE TABLE IF NOT EXISTS `category_logs` (
 );
 
 CREATE TABLE IF NOT EXISTS `product_logs` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `user_id` INT NOT NULL,
     `id_product` INT NOT NULL,
+    `ip_address` VARCHAR(255),
+    `action` VARCHAR(255),
     `content` TEXT,
+    `status` ENUM('success', 'failed') NOT NULL,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
@@ -109,10 +117,14 @@ CREATE TABLE IF NOT EXISTS `product_logs` (
 );
 
 CREATE TABLE IF NOT EXISTS `services_logs` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `user_id` INT NOT NULL,
     `id_service` INT NOT NULL,
+    `ip_address` VARCHAR(255),
+    `action` VARCHAR(255),
     `content` TEXT,
+    `status` ENUM('success', 'failed') NOT NULL,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
@@ -120,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `services_logs` (
 );
 
 CREATE TABLE IF NOT EXISTS `session` (
-    `id` INT NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(50),
     `user_id` INT NOT NULL,
     `ip_address` VARCHAR(255),
     `refresh_token` VARCHAR(255),
