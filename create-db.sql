@@ -70,6 +70,21 @@ CREATE TABLE IF NOT EXISTS `login_logs` (
     FOREIGN KEY (`id_user`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS `user_logs` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `admin_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `ip_address` VARCHAR(255),
+    `action` VARCHAR(255),
+    `content` TEXT,
+    `status` ENUM('success', 'failed') NOT NULL,
+    `reason` TEXT,
+    `created_at` DATETIME,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`admin_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS `category_logs` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
