@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 
 CREATE TABLE IF NOT EXISTS `products` (
     `id` VARCHAR(50),
-    `id_category` INT NOT NULL,
+    `id_category` VARCHAR(50) NOT NULL,
     `product_name` VARCHAR(255) NOT NULL,
     `preview` TEXT,
     `logo` VARCHAR(255),
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `services` (
 
 CREATE TABLE IF NOT EXISTS `login_logs` (
     `id` VARCHAR(50),
-    `id_user` INT NOT NULL,
+    `id_user` VARCHAR(50) NOT NULL,
     `user` VARCHAR(255),
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `login_logs` (
 
 CREATE TABLE IF NOT EXISTS `user_logs` (
     `id` VARCHAR(50),
-    `admin_id` INT NOT NULL,
-    `user_id` INT NOT NULL,
+    `admin_id` VARCHAR(50) NOT NULL,
+    `user_id` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -88,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `user_logs` (
 
 CREATE TABLE IF NOT EXISTS `category_logs` (
     `id` VARCHAR(50),
-    `user_id` INT NOT NULL,
-    `id_category` INT NOT NULL,
+    `user_id` VARCHAR(50) NOT NULL,
+    `id_category` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -103,8 +103,8 @@ CREATE TABLE IF NOT EXISTS `category_logs` (
 
 CREATE TABLE IF NOT EXISTS `product_logs` (
     `id` VARCHAR(50),
-    `user_id` INT NOT NULL,
-    `id_product` INT NOT NULL,
+    `user_id` VARCHAR(50) NOT NULL,
+    `id_product` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -118,8 +118,8 @@ CREATE TABLE IF NOT EXISTS `product_logs` (
 
 CREATE TABLE IF NOT EXISTS `services_logs` (
     `id` VARCHAR(50),
-    `user_id` INT NOT NULL,
-    `id_service` INT NOT NULL,
+    `user_id` VARCHAR(50) NOT NULL,
+    `id_service` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `services_logs` (
 
 CREATE TABLE IF NOT EXISTS `session` (
     `id` VARCHAR(50),
-    `user_id` INT NOT NULL,
+    `user_id` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
     `refresh_token` VARCHAR(255),
     `created_at` DATETIME,
