@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS `Bkav_CS`;
-CREATE DATABASE IF NOT EXISTS `Bkav_CS`;
+CREATE DATABASE IF NOT EXISTS `Bkav_CS` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `Bkav_CS`;
 
 -- --------------------------------------------------------
@@ -7,133 +7,134 @@ USE `Bkav_CS`;
 CREATE TABLE IF NOT EXISTS `users` (
     `id` VARCHAR(50),
     `user_code` VARCHAR(50) NOT NULL UNIQUE,
-    `full_name` VARCHAR(255) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `full_name` VARCHAR(255) NOT NULL,
     `username` VARCHAR(255) NOT NULL,
     `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    `role` VARCHAR(255) NOT NULL DEFAULT 'admin',
+    `role` ENUM('super_admin', 'admin') NOT NULL DEFAULT 'admin',
     `session_quantity` INT DEFAULT 3,
     `login_time` INT DEFAULT 24,
     `is_active` BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`),
     UNIQUE KEY `email` (`email`)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `categories` (
     `id` VARCHAR(50),
     `category_code` VARCHAR(50) NOT NULL UNIQUE,
-    `category_name` VARCHAR(255) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `category_name` VARCHAR(255) NOT NULL,
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `products` (
     `id` VARCHAR(50),
     `id_category` VARCHAR(50) NOT NULL,
     `product_code` VARCHAR(50) NOT NULL UNIQUE,
-    `product_name` VARCHAR(255) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `preview` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `product_name` VARCHAR(255) NOT NULL,
+    `preview` TEXT,
     `logo` VARCHAR(255),
     `image` VARCHAR(255),
     `link_demo` VARCHAR(255),
     `file_download` VARCHAR(255),
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `content` TEXT,
     `view` INT DEFAULT 0,
-    `status` VARCHAR(255),
+    `status` ENUM('active', 'inactive', 'hidden') NOT NULL DEFAULT 'active',
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`id_category`) REFERENCES `categories`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `services` (
     `id` VARCHAR(50),
     `service_code` VARCHAR(50) NOT NULL UNIQUE,
-    `service_name` VARCHAR(255) NOT NULL CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `preview` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `service_name` VARCHAR(255) NOT NULL,
+    `preview` TEXT,
+    `content` TEXT,
     `image` VARCHAR(255),
     `view` INT DEFAULT 0,
+    `status` ENUM('active', 'inactive', 'hidden') NOT NULL DEFAULT 'active',
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `login_logs` (
     `id` VARCHAR(50),
     `id_user` VARCHAR(50) NOT NULL,
     `user` VARCHAR(255),
     `ip_address` VARCHAR(255),
-    `action` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `action` VARCHAR(255),
+    `content` TEXT,
     `status` ENUM('success', 'failed') NOT NULL,
-    `reason` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`id_user`) REFERENCES `users`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `user_logs` (
     `id` VARCHAR(50),
     `admin_id` VARCHAR(50) NOT NULL,
     `user_id` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
-    `action` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `action` VARCHAR(255),
+    `content` TEXT,
     `status` ENUM('success', 'failed') NOT NULL,
-    `reason` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`admin_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `category_logs` (
     `id` VARCHAR(50),
     `user_id` VARCHAR(50) NOT NULL,
     `id_category` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
-    `action` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `action` VARCHAR(255),
+    `content` TEXT,
     `status` ENUM('success', 'failed') NOT NULL,
-    `reason` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`id_category`) REFERENCES `categories`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `product_logs` (
     `id` VARCHAR(50),
     `user_id` VARCHAR(50) NOT NULL,
     `id_product` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
-    `action` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `action` VARCHAR(255),
+    `content` TEXT,
     `status` ENUM('success', 'failed') NOT NULL,
-    `reason` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`id_product`) REFERENCES `products`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `services_logs` (
     `id` VARCHAR(50),
     `user_id` VARCHAR(50) NOT NULL,
     `id_service` VARCHAR(50) NOT NULL,
     `ip_address` VARCHAR(255),
-    `action` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    `content` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `action` VARCHAR(255),
+    `content` TEXT,
     `status` ENUM('success', 'failed') NOT NULL,
-    `reason` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    `reason` TEXT,
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`id_service`) REFERENCES `services`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `session` (
     `id` VARCHAR(50),
@@ -143,4 +144,4 @@ CREATE TABLE IF NOT EXISTS `session` (
     `created_at` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
