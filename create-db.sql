@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `services` (
 
 CREATE TABLE IF NOT EXISTS `login_logs` (
     `id` VARCHAR(50),
-    `id_user` VARCHAR(50) NOT NULL,
+    `id_user` VARCHAR(50) NULL,
     `user` VARCHAR(255),
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `login_logs` (
 CREATE TABLE IF NOT EXISTS `user_logs` (
     `id` VARCHAR(50),
     `admin_id` VARCHAR(50) NOT NULL,
-    `user_id` VARCHAR(50) NOT NULL,
+    `user_id` VARCHAR(50) NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `user_logs` (
 CREATE TABLE IF NOT EXISTS `category_logs` (
     `id` VARCHAR(50),
     `user_id` VARCHAR(50) NOT NULL,
-    `id_category` VARCHAR(50) NOT NULL,
+    `id_category` VARCHAR(50) NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `category_logs` (
 CREATE TABLE IF NOT EXISTS `product_logs` (
     `id` VARCHAR(50),
     `user_id` VARCHAR(50) NOT NULL,
-    `id_product` VARCHAR(50) NOT NULL,
+    `id_product` VARCHAR(50) NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `product_logs` (
 CREATE TABLE IF NOT EXISTS `services_logs` (
     `id` VARCHAR(50),
     `user_id` VARCHAR(50) NOT NULL,
-    `id_service` VARCHAR(50) NOT NULL,
+    `id_service` VARCHAR(50) NULL,
     `ip_address` VARCHAR(255),
     `action` VARCHAR(255),
     `content` TEXT,
